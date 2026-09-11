@@ -1,0 +1,9 @@
+/* src/app/globals.css */
+@import "tailwindcss";
+
+@theme {
+  --color-kano-green-primary: #005C2B;
+  --color-kano-green-dark: #003D1C;
+  --color-kano-gold: #D97706;
+  --color-kano-gold-hover: #B45309;
+}
