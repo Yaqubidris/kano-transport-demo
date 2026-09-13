@@ -1,15 +1,23 @@
+'client'; // If using Next.js App Router, ensure interactivity works
+
+'use client';
+
+import { useState } from 'react';
 import Link from 'next/link';
 import Image from 'next/image';
-import { Phone, Mail, AlertCircle, Search, Menu } from 'lucide-react';
+import { Phone, Mail, AlertCircle, Search, Menu, X } from 'lucide-react';
+
 
 export default function Header() {
+  const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
+
   return (
-    <header className="w-full font-sans border-b border-gray-200">
+    <header className="w-full font-sans border-b border-gray-200 relative bg-white z-50">
       {/* 1. Official Government Announcement & Contact Top Bar */}
       <div className="bg-[#003D1C] text-white text-xs py-2 px-4 md:px-8 flex flex-col md:flex-row justify-between items-center gap-2">
         <div className="flex items-center gap-4 divide-x divide-emerald-700">
           <span className="flex items-center gap-1 font-medium text-emerald-200">
-            <AlertCircle className="w-3.5 h-3.5 text-amber-400" />
+            <AlertCircle className="w-3.5 h-3.5 text-amber-400 shrink-0" />
             Official Portal of Kano State Government
           </span>
           <span className="pl-4 hidden sm:inline text-gray-300">
@@ -34,7 +42,7 @@ export default function Header() {
         {/* Brand / Logo Section */}
         <Link href="/" className="flex items-center gap-3">
           <Image
-            src="/logo.png" // Ensure your file in /public is named logo.png
+            src="/logo.png"
             alt="Kano State Ministry of Transportation Logo"
             width={56}
             height={56}
@@ -82,11 +90,65 @@ export default function Header() {
           <button className="bg-[#005C2B] hover:bg-[#003D1C] text-white px-4 py-2 rounded-lg text-sm font-semibold shadow-md transition">
             Verify Permit
           </button>
-          <button className="lg:hidden text-gray-700 p-2">
-            <Menu className="w-6 h-6" />
+          
+          {/* Mobile Hamburger Toggle Button */}
+          <button 
+            onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
+            className="lg:hidden text-gray-700 p-2 focus:outline-none hover:bg-gray-100 rounded-lg transition"
+            aria-label="Toggle menu"
+          >
+            {isMobileMenuOpen ? <X className="w-6 h-6" /> : <Menu className="w-6 h-6" />}
           </button>
         </div>
       </div>
+
+      {/* Mobile Navigation Dropdown Drawer */}
+      {isMobileMenuOpen && (
+        <div className="lg:hidden absolute top-full left-0 w-full bg-white border-b border-gray-200 shadow-xl py-6 px-6 flex flex-col gap-4 animate-fadeIn">
+          <Link 
+            href="#" 
+            onClick={() => setIsMobileMenuOpen(false)}
+            className="text-[#005C2B] font-bold text-base border-b border-gray-100 pb-2"
+          >
+            Home
+          </Link>
+          <Link 
+            href="#about" 
+            onClick={() => setIsMobileMenuOpen(false)}
+            className="text-gray-700 font-medium text-base hover:text-[#005C2B] border-b border-gray-100 pb-2"
+          >
+            About Ministry
+          </Link>
+          <Link 
+            href="#agencies" 
+            onClick={() => setIsMobileMenuOpen(false)}
+            className="text-gray-700 font-medium text-base hover:text-[#005C2B] border-b border-gray-100 pb-2"
+          >
+            Agencies & KAROTA
+          </Link>
+          <Link 
+            href="#services" 
+            onClick={() => setIsMobileMenuOpen(false)}
+            className="text-gray-700 font-medium text-base hover:text-[#005C2B] border-b border-gray-100 pb-2"
+          >
+            Services & Permits
+          </Link>
+          <Link 
+            href="#projects" 
+            onClick={() => setIsMobileMenuOpen(false)}
+            className="text-gray-700 font-medium text-base hover:text-[#005C2B] border-b border-gray-100 pb-2"
+          >
+            Projects
+          </Link>
+          <Link 
+            href="#news" 
+            onClick={() => setIsMobileMenuOpen(false)}
+            className="text-gray-700 font-medium text-base hover:text-[#005C2B] pb-2"
+          >
+            News & Updates
+          </Link>
+        </div>
+      )}
 
       {/* Live Ticker Bar */}
       <div className="bg-amber-50 border-y border-amber-200/60 px-4 md:px-8 py-2 flex items-center gap-3 text-xs md:text-sm">
